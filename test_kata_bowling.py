@@ -1,43 +1,46 @@
-import unit_test as test
+import unittest
 import kata_bowling as bow
 
-def roll_many(obj,times,bins):
+class TestBowling(unittest.TestCase):
+	def setup(self):
+		pass
+	def tearDown(self):
+		pass
+
+	def roll_many(self,obj,times,bins):
 		for i in range(0,times):
 			obj.roll(bins)
-		
-def test_allZeros():
-	b = bow.bowling()
-	roll_many(b,20,0)
-	return b.getScore()	
-
-def test_allOnes():
-	b = bow.bowling()
-	roll_many(b,20,1)
-	return b.getScore()	
-
-def test_sparse():
-	b = bow.bowling()
-	roll_many(b,1,5)
-	roll_many(b,1,5)
-	roll_many(b,1,3)
-	roll_many(b,17,0)
-	return b.getScore()	
+			
+	def test_allZeros(self):
+		b = bow.bowling()
+		self.roll_many(b,20,0)
+		self.assertEqual(b.getScore(),0)		
 	
-def test_strike():
-	b = bow.bowling()
-	roll_many(b,1,10)
-	roll_many(b,1,3)	
-	roll_many(b,1,3)	
-	roll_many(b,16,0)
-	return b.getScore()		
-
-def test_perfect():
-	b = bow.bowling()
-	roll_many(b,12,10)
-	return b.getScore()			
+	def test_allOnes(self):
+		b = bow.bowling()
+		self.roll_many(b,20,1)
+		self.assertEqual(b.getScore(),20)
+	
+	def test_sparse(self):
+		b = bow.bowling()
+		self.roll_many(b,1,5)
+		self.roll_many(b,1,5)
+		self.roll_many(b,1,3)
+		self.roll_many(b,17,0)
+		self.assertEqual(b.getScore(),16)
 		
-test.run_test_case('all zeros',test_allZeros,0)
-test.run_test_case('all ones',test_allOnes,20)
-test.run_test_case('one sparse',test_sparse,16)
-test.run_test_case('one strike',test_strike,22)	
-test.run_test_case('perfect',test_perfect,300)	
+	def test_strike(self):
+		b = bow.bowling()
+		self.roll_many(b,1,10)
+		self.roll_many(b,1,3)	
+		self.roll_many(b,1,3)	
+		self.roll_many(b,16,0)
+		self.assertEqual(b.getScore(),22)		
+	
+	def test_perfect(self):
+		b = bow.bowling()
+		self.roll_many(b,12,10)
+		self.assertEqual(b.getScore(),300)
+		
+if __name__ == '__main__':		
+	unittest.main()		
